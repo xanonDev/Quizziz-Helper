@@ -1,5 +1,5 @@
 <h1>Quizziz Helper</h1>
-Quizziz Helper to rozszerzenie do przeglądarek internetowych, które automatycznie pobiera odpowiedzi do pytań w Quizizz na platformie Quizit.
+Quizziz Helper to rozszerzenie do przeglądarek internetowych, które automatycznie pobiera odpowiedzi do pytań w Quizizz na platformie Quizit.<br>
 <img src="https://raw.githubusercontent.com/xanonDev/Quizziz-Helper/main/screenshot.png">
 
 <h2>Jak korzystać z rozszerzenia?</h2>
