@@ -1,10 +1,12 @@
 setInterval(function(){
     let app_header = document.querySelector('.app-header-container');
     if (app_header) {
-    app_header.remove();
-}
+        app_header.parentNode.removeChild(app_header);
+    }
+
     let pin = window.location.href;
     let url = `https://api.quizit.online/quizizz/answers?pin=${pin}`;
+
     fetch(url, {method: 'GET'})
         .then(response => response.json())
         .then(data => {
@@ -17,7 +19,7 @@ setInterval(function(){
                 let question_cut = question.replace("<p>", "").replace("</p>", "");
                 let answer = '';
                 for (let j = 0; j < answers[i]['answers'].length; j++) {
-                    answer += answers[i]['answers'][j]['text'] + " ";
+                    answer += answers[i]['answers'][j]['text'] + ", ";
                 }
                 let answer_cut = answer.replace("<p>", "").replace("</p>", "");
                 let question_and_answer = {'pytanie': question_cut, 'odpowiedz': answer_cut};
@@ -36,6 +38,7 @@ setInterval(function(){
                 for (let i = 0; i < questions_and_answers.length; i++) {
                     if (questions_and_answers[i]['pytanie'] === question) {
                         answer = questions_and_answers[i]['odpowiedz'];
+                        answer = answer.slice(0, -2);
                         break;
                     }
                 }
@@ -44,7 +47,7 @@ setInterval(function(){
                 let answer_element = document.createElement('div');
                 answer_element.innerHTML = answer;
                 answer_element.style.backgroundColor = 'green';
-                answer_element.style.padding = '10px';
+                answer_element.style.padding = '7px';
                 answer_element.style.color = 'white';
                 answer_element.style.fontWeight = 'bold';
                 document.body.insertBefore(answer_element, document.body.firstChild);
@@ -52,10 +55,10 @@ setInterval(function(){
                 // Remove the answer element after 6 seconds
                 setTimeout(function(){
                     answer_element.remove();
-                }, 6000);
+                }, 5995);
             } else {
                 console.log('Nie znaleziono pytania na stronie.');
             }
         })
         .catch(error => console.error(error));
-}, 7000);
+}, 6000);
