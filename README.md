@@ -4,13 +4,16 @@ Quizziz Helper to rozszerzenie do przeglądarek internetowych, które automatycz
 
 <h2>Jak korzystać z rozszerzenia?</h2>
 1.Zainstaluj rozszerzenie w przeglądarce internetowej. <br>
+tutorial wkrótce!!! <br>
 2.Wejdź na stronę Quizizz. <br>
+3.Wpisz kod lub rozpocznij quizz <br>
+4.kliknij Hack Answer <br>
+5.ciesz się odpowiedziami <br>
 Odpowiedzi pojawią się automatycznie, gdy pojawi się pytanie. <br>
 <a href="https://github.com/xanonDev/Quizziz-Helper/releases/download/quizziz/Quizziz.Helper.zip">POBIERZ JUŻ TERAZ!!!</a>
 <h2>Jak działa rozszerzenie? </h2>
-Rozszerzenie wykorzystuje interwał czasowy setInterval(), aby uruchamiać kod co 7 sekund. Kod ten sprawdza, czy na stronie pojawiło się pytanie, a jeśli tak, pobiera odpowiedzi do bieżącej gry z API Quizit. Następnie analizuje dane odpowiedzi, aby wyodrębnić pytania i odpowiedzi i przechowuje je w tablicy.
-<br>
-Rozszerzenie następnie przeszukuje stronę w poszukiwaniu elementu zawierającego bieżące pytanie i dopasowuje go z odpowiedzią z tablicy. Jeśli odnajdzie dopasowanie, automatycznie wyświetli odpowiedź na górze strony.
+rozszerzenie pobiera odpowiedzi z quizzisa za pomocą api https://quizit.online/services/quizizz/ <br>
+oraz modyfikuje strone quizzisa wyświetlając je nam na górze ekranu jak widać na ss
 
 <h2> Ostrzeżenie </h2>
 rozszerzenie jest w fazie testów <br>
