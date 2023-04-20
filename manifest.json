@@ -5,8 +5,8 @@
   "description": "wykrada odpowiedzi do quizu",
   "content_scripts": [
     {
-      "matches": ["https://*.quizizz.com/*"],
-      "js": ["script.js"],
+      "matches": ["https://quizizz.com/join/*"],
+      "js": ["quizziz.js"],
       "run_at": "document_end"
     }
   ],
