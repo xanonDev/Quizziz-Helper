@@ -5,7 +5,7 @@
   "description": "wykrada odpowiedzi do quizu",
   "content_scripts": [
     {
-      "matches": ["https://quizizz.com/join/*"],
+      "matches": ["https://*.quizizz.com/*"],
       "js": ["quizziz.js"],
       "run_at": "document_end"
     }
