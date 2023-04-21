@@ -1,77 +1,86 @@
 let showanswers;
 function OnClick() {
-    // Pobieramy adres URL bieżącej strony
     let pin = window.location.href;
-    // Tworzymy adres URL API Quizizz, do którego będziemy wysyłać zapytania
     let url = `https://api.quizit.online/quizizz/answers?pin=${pin}`;
     console.log("pobierano odpowiedzi");
     
-    // Wysyłamy zapytanie GET za pomocą funkcji `fetch()`
     fetch(url, { method: 'GET' })
       .then(response => response.json())
       .then(data => {
-        // Tworzymy tablicę `questions_and_answers`, w której będziemy przechowywać pytania i odpowiedzi
         let answers = data['data']['answers'];
         let questions_and_answers = [];
   
-        // Iterujemy przez wszystkie pytania i odpowiedzi i dodajemy je do tablicy `questions_and_answers`
         for (let i = 0; i < answers.length; i++) {
-          let question = answers[i]['question']['text'];
-          let question_cut = question.replace("<p>", "").replace("</p>", "");
+          let question = answers[i]['_id'];
           let answer = '';
           for (let j = 0; j < answers[i]['answers'].length; j++) {
-            answer += answers[i]['answers'][j]['text'] + ", ";
+            answer += answers[i]['answers'][j]['text'] + "|";
           }
           let answer_cut = answer.replace("<p>", "").replace("</p>", "");
-          let question_and_answer = { 'pytanie': question_cut, 'odpowiedz': answer_cut };
+          let question_and_answer = { 'pytanie': question, 'odpowiedz': answer_cut };
           questions_and_answers.push(question_and_answer);
         }
         
-        // Po zakończeniu iteracji, wywołujemy funkcję `Hack()` i przekazujemy do niej tablicę `questions_and_answers`
 
-        showanswers = setInterval(() => Hack(questions_and_answers, pin), 3000);
+        showanswers = setInterval(() => Hack(questions_and_answers, pin), 1200);
       })
       .catch(error => {
         console.error('Wystąpił błąd:', error);
       });
   }
-  
-  // Deklarujemy funkcję `Hack()` i przekazujemy do niej tablicę `questions_and_answers`
+
   function Hack(questions_and_answers) {
-    let app_header = document.querySelector('.app-header-container');
-    if (app_header) {
-        app_header.parentNode.removeChild(app_header);
-    }
-    // Find an element similar to "<p style="display:inline">What is an adverb?</p>" on the page
-    let question_element = document.querySelector('p[style="display:inline"]');
+    let question_element = localStorage.getItem('previousContext');
+    const parsedContext = JSON.parse(question_element);
+    const QuestionId = parsedContext.game.lastVisibleQuestionId;
 
     if (question_element) {
-        // Get the value of the question
-        let question = question_element.textContent.trim();
-
-        // Find the answer in the JSON data
         let answer = '';
         for (let i = 0; i < questions_and_answers.length; i++) {
-            if (questions_and_answers[i]['pytanie'] === question) {
+            if (questions_and_answers[i]['pytanie'] === QuestionId) {
                 answer = questions_and_answers[i]['odpowiedz'];
-                answer = answer.slice(0, -2);
+                answer = answer.slice(0, -1);
                 break;
             }
         }
 
-        // Add the answer to the top of the page
-        let answer_element = document.createElement('div');
-        answer_element.innerHTML = answer;
-        answer_element.style.backgroundColor = 'green';
-        answer_element.style.padding = '7px';
-        answer_element.style.color = 'white';
-        answer_element.style.fontWeight = 'bold';
-        document.body.insertBefore(answer_element, document.body.firstChild);
-
-        // Remove the answer element after 6 seconds
-        setTimeout(function(){
-            answer_element.remove();
-        }, 3000);
+        var znalezionoOdpowiedz = false;
+        var elementyP = document.getElementsByTagName("p");
+        for (var i = 0; i < elementyP.length; i++) {
+        var elementP = elementyP[i];
+        if (elementP.textContent.includes(answer)) {
+        elementP.style.color = "#00FF00";
+        elementP.style.textDecoration = "underline";
+        elementP.style.textShadow = "2px 2px 4px rgba(0, 0, 0, 0.5)";
+        znalezionoOdpowiedz = true;
+        }
+        }
+        if (!znalezionoOdpowiedz) {
+          var elementyP = document.getElementsByTagName("p");
+          var answerArray = answer.split("|");
+          answerArray = answerArray.map(item => item.replace("<p>", ''));
+          answerArray = answerArray.map(item => item.replace("</p>", ''));
+          for (var j = 0; j < answerArray.length; j++) {
+            var answerElement = answerArray[j].trim();
+            for (var i = 0; i < elementyP.length; i++) {
+              var elementP = elementyP[i];
+              if (elementP.textContent.includes(answerElement)) {
+                elementP.style.color = "#00FF00";
+                elementP.style.textDecoration = "underline";
+                elementP.style.textShadow = "2px 2px 4px rgba(0, 0, 0, 0.5)";
+                znalezionoOdpowiedz = true;
+              }
+            }
+          }
+        }
+        answer = answer + "|";
+        answer = answer.split("|");
+        answer = answer[0].trim();
+        const textareaElement = document.querySelector('textarea.typed-option-input.is-incorrect');
+        if (textareaElement) {
+          textareaElement.value = answer;
+        } else {
+        }
     } else {
         console.log('Nie znaleziono pytania na stronie.');
     }
@@ -104,14 +113,12 @@ function OnClick() {
     alert("odpowiedzi zostały pobrane możesz rozpocząć quiz, by ponownie wyświetlić przycisk do pobierania odpowiedzi kliknij h, pamiętaj przy rozpoczęciu następnego quizu musisz pobrać je ponownie");
   };
   button.addEventListener('mouseenter', function() {
-    // Dodajemy styl CSS
     button.style.backgroundColor = 'green';
     button.style.color = "white";
     button.style.border = "2px solid white"
   });
   
   button.addEventListener('mouseleave', function() {
-    // Przywracamy pierwotny styl
     button.style.backgroundColor = 'red';
     button.style.color = "black";
     button.style.border = "2px solid black"
@@ -128,4 +135,3 @@ function OnClick() {
       }
     }
   });
- 
