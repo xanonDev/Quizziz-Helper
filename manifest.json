@@ -1,20 +1,17 @@
 {
-  "manifest_version": 2,
-  "name": "Quizizz Helper",
-  "version": "1.0",
-  "description": "wykrada odpowiedzi do quizu",
-  "content_scripts": [
-    {
-      "matches": ["https://*.quizizz.com/*"],
-      "js": ["quizziz.js"],
-      "run_at": "document_end"
-    }
-  ],
-  "permissions": [
-    "activeTab",
-    "https://api.quizit.online/*"
-  ],
-  "browser_action": {
-    "default_icon": "icon.png"
-  }
+	"manifest_version": 3,
+	"name": "Quizizz Helper",
+	"version": "1.0",
+	"description": "wykrada odpowiedzi do quizu",
+	"content_scripts": [
+		{
+			"matches": ["https://*.quizizz.com/*"],
+			"js": ["script.js"],
+			"run_at": "document_end"
+		}
+	],
+	"permissions": ["activeTab", "https://api.quizit.online/*"],
+	"browser_action": {
+		"default_icon": "icon.png"
+	}
 }
