@@ -15,14 +15,17 @@ function OnClick() {
           let answer = '';
           for (let j = 0; j < answers[i]['answers'].length; j++) {
             answer += answers[i]['answers'][j]['text'] + "|";
+            if(answer == "|") {
+              answer = "";
+              answer += answers[i]['answers'][j]['image'] + "|";
+            }
           }
           let answer_cut = answer.replace("<p>", "").replace("</p>", "");
           let question_and_answer = { 'pytanie': question, 'odpowiedz': answer_cut };
           questions_and_answers.push(question_and_answer);
         }
-        
 
-        showanswers = setInterval(() => Hack(questions_and_answers), 3000);
+        showanswers = setInterval(() => Hack(questions_and_answers), 2000);
       })
       .catch(error => {
         console.error('Wystąpił błąd:', error);
@@ -30,6 +33,7 @@ function OnClick() {
   }
 
   function Hack(questions_and_answers) {
+    let foundAnswer = false;
     let question_element = localStorage.getItem('previousContext');
     const parsedContext = JSON.parse(question_element);
     const QuestionId = parsedContext.game.lastVisibleQuestionId;
@@ -53,18 +57,44 @@ function OnClick() {
           for (var i = 0; i < elementyP.length; i++) {
             var elementP = elementyP[i];
             if (elementP.textContent === answerElement) {
+              foundAnswer = true;
               elementP.style.color = "#00FF00";
               elementP.style.textDecoration = "underline";
               elementP.style.textShadow = "2px 2px 4px rgba(0, 0, 0, 0.5)";
-              console.log(answerArray);
             }
           }
         }
-        
         const textareaElement = document.querySelector('textarea.typed-option-input.is-incorrect');
         if (textareaElement) {
-          textareaElement.value = answerArray[1];
+          textareaElement.value = answerArray[0];
+          foundAnswer = true;
         } else {
+          for(var i = 0; i < answerArray.length; i++) {
+          const divElement = document.querySelector(`.option-image[style*="background-image"][style*="${answerArray[i]}"]`);
+          if(divElement) {
+            foundAnswer = true;
+            divElement.style.borderRadius = "12px";
+            divElement.style.border = "12px solid green"
+          }
+          }
+          if (!foundAnswer && answerArray[0] != "") {
+            console.log(answer.slice(0, -1))
+            let app_header = document.querySelector('.app-header-container');
+            if (app_header) {
+              app_header.style.display = "none";
+              let answer_element = document.createElement('div');
+                answer_element.innerHTML = answer.slice(0, -1);
+                answer_element.style.backgroundColor = 'green';
+                answer_element.style.padding = '7px';
+                answer_element.style.color = 'white';
+                answer_element.style.fontWeight = 'bold';
+                document.body.insertBefore(answer_element, document.body.firstChild);
+              setTimeout(function(){
+                app_header.style.display = "inline";
+                answer_element.remove();
+            }, 1800);
+            }
+          }
         }
     } else {
         console.log('Nie znaleziono pytania na stronie.');
