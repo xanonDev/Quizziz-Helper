@@ -22,7 +22,7 @@ function OnClick() {
         }
         
 
-        showanswers = setInterval(() => Hack(questions_and_answers, pin), 1200);
+        showanswers = setInterval(() => Hack(questions_and_answers), 3000);
       })
       .catch(error => {
         console.error('Wystąpił błąd:', error);
@@ -39,46 +39,31 @@ function OnClick() {
         for (let i = 0; i < questions_and_answers.length; i++) {
             if (questions_and_answers[i]['pytanie'] === QuestionId) {
                 answer = questions_and_answers[i]['odpowiedz'];
-                answer = answer.slice(0, -1);
                 break;
             }
         }
 
-        var znalezionoOdpowiedz = false;
         var elementyP = document.getElementsByTagName("p");
-        for (var i = 0; i < elementyP.length; i++) {
-        var elementP = elementyP[i];
-        if (elementP.textContent.includes(answer)) {
-        elementP.style.color = "#00FF00";
-        elementP.style.textDecoration = "underline";
-        elementP.style.textShadow = "2px 2px 4px rgba(0, 0, 0, 0.5)";
-        znalezionoOdpowiedz = true;
-        }
-        }
-        if (!znalezionoOdpowiedz) {
-          var elementyP = document.getElementsByTagName("p");
-          var answerArray = answer.split("|");
-          answerArray = answerArray.map(item => item.replace("<p>", ''));
-          answerArray = answerArray.map(item => item.replace("</p>", ''));
-          for (var j = 0; j < answerArray.length; j++) {
-            var answerElement = answerArray[j].trim();
-            for (var i = 0; i < elementyP.length; i++) {
-              var elementP = elementyP[i];
-              if (elementP.textContent.includes(answerElement)) {
-                elementP.style.color = "#00FF00";
-                elementP.style.textDecoration = "underline";
-                elementP.style.textShadow = "2px 2px 4px rgba(0, 0, 0, 0.5)";
-                znalezionoOdpowiedz = true;
-              }
+        var answerArray = answer.split("|");
+        answerArray = answerArray.map(item => item.replace("<p>", ''));
+        answerArray = answerArray.map(item => item.replace("</p>", ''));
+        answerArray.pop();
+        for (var j = 0; j < answerArray.length; j++) {
+          var answerElement = answerArray[j].trim();
+          for (var i = 0; i < elementyP.length; i++) {
+            var elementP = elementyP[i];
+            if (elementP.textContent === answerElement) {
+              elementP.style.color = "#00FF00";
+              elementP.style.textDecoration = "underline";
+              elementP.style.textShadow = "2px 2px 4px rgba(0, 0, 0, 0.5)";
+              console.log(answerArray);
             }
           }
         }
-        answer = answer + "|";
-        answer = answer.split("|");
-        answer = answer[0].trim();
+        
         const textareaElement = document.querySelector('textarea.typed-option-input.is-incorrect');
         if (textareaElement) {
-          textareaElement.value = answer;
+          textareaElement.value = answerArray[1];
         } else {
         }
     } else {
