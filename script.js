@@ -25,7 +25,7 @@ function OnClick() {
           questions_and_answers.push(question_and_answer);
         }
 
-        showanswers = setInterval(() => Hack(questions_and_answers), 2000);
+        showanswers = setInterval(() => Hack(questions_and_answers), 1000);
       })
       .catch(error => {
         console.error('Wystąpił błąd:', error);
@@ -81,23 +81,31 @@ function OnClick() {
               console.log("nie znaleziono obrazka");
             }
           }
-          if (!foundAnswer && answerArray[0] != "") {
+          const optionsContainer = document.querySelector('.options-container');
+
+          if (!foundAnswer && optionsContainer !== null && optionsContainer.classList.contains('w-full') && optionsContainer.classList.contains('text-center') && optionsContainer.classList.contains('rounded-t-lg') && optionsContainer.classList.contains('h-1/2')) {
             console.log(answer.slice(0, -1))
-            let app_header = document.querySelector('.app-header-container');
-            if (app_header) {
-              app_header.style.display = "none";
               let answer_element = document.createElement('div');
                 answer_element.innerHTML = answer.slice(0, -1);
                 answer_element.style.backgroundColor = 'green';
-                answer_element.style.padding = '7px';
+                answer_element.style.padding = '10px';
                 answer_element.style.color = 'white';
                 answer_element.style.fontWeight = 'bold';
+                answer_element.style.position = "fixed";
+                answer_element.style.bottom = "350px";
+                answer_element.style.right = "30px";
+                answer_element.style.width = "300px";
+                answer_element.style.height = "200px";
+                answer_element.style.zIndex = "999";
+                answer_element.style.fontSize = "20px";
+                answer_element.style.border = "3px solid black";
+                answer_element.style.borderRadius = "10px";
+                answer_element.style.boxShadow = "5px 5px 5px rgba(2, 3, 5, 6.3)";
+                answer_element.textShadow = "3px 3px 5px rgba(1, 1, 1, 1.5)";
                 document.body.insertBefore(answer_element, document.body.firstChild);
               setTimeout(function(){
-                app_header.style.display = "inline";
                 answer_element.remove();
-            }, 1800);
-            }
+            }, 1000);
           }
         }
     } else {
@@ -115,6 +123,7 @@ function OnClick() {
   button.style.fontWeight = 'bold';
   button.style.borderRadius = "12px";
   button.style.border = "2px solid black"
+  button.style.zIndex = "999";
   let czywyswietlany = true;
   button.onclick = function() {
     OnClick();
