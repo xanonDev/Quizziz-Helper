@@ -1,8 +1,8 @@
 {
 	"manifest_version": 3,
 	"name": "Quizizz Helper",
-	"version": "1.0",
-	"description": "wykrada odpowiedzi do quizu",
+	"version": "1.5",
+	"description": "wykrada odpowiedzi do quizów na quizziz, autor x__anon",
 	"content_scripts": [
 		{
 			"matches": ["https://*.quizizz.com/*"],
@@ -13,5 +13,10 @@
 	"permissions": ["activeTab", "https://api.quizit.online/*"],
 	"browser_action": {
 		"default_icon": "icon.png"
+	},
+	"icons": {
+		"128": "icon.png",
+		"16": "icon.png",
+		"48": "icon.png"
 	}
 }
