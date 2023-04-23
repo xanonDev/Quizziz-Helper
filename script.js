@@ -70,12 +70,16 @@ function OnClick() {
           foundAnswer = true;
         } else {
           for(var i = 0; i < answerArray.length; i++) {
-          const divElement = document.querySelector(`.option-image[style*="background-image"][style*="${answerArray[i]}"]`);
-          if(divElement) {
-            foundAnswer = true;
-            divElement.style.borderRadius = "12px";
-            divElement.style.border = "12px solid green"
-          }
+            try {
+              const divElement = document.querySelector(`.option-image[style*="background-image"][style*="${answerArray[i]}"]`);
+              if(divElement) {
+                foundAnswer = true;
+                divElement.style.borderRadius = "12px";
+                divElement.style.border = "12px solid green"
+              }
+            } catch (error) {
+              console.log("nie znaleziono obrazka");
+            }
           }
           if (!foundAnswer && answerArray[0] != "") {
             console.log(answer.slice(0, -1))
