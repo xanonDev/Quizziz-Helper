@@ -85,23 +85,18 @@ function OnClick() {
 
           if (!foundAnswer && optionsContainer !== null && optionsContainer.classList.contains('w-full') && optionsContainer.classList.contains('text-center') && optionsContainer.classList.contains('rounded-t-lg') && optionsContainer.classList.contains('h-1/2')) {
             console.log(answer.slice(0, -1))
-              let answer_element = document.createElement('div');
+              let answer_element = document.createElement('p');
                 answer_element.innerHTML = answer.slice(0, -1);
                 answer_element.style.backgroundColor = 'green';
-                answer_element.style.padding = '10px';
+                answer_element.style.padding = '8px';
                 answer_element.style.color = 'white';
                 answer_element.style.fontWeight = 'bold';
+                answer_element.style.width = "100%";
                 answer_element.style.position = "fixed";
-                answer_element.style.bottom = "350px";
-                answer_element.style.right = "30px";
-                answer_element.style.width = "300px";
-                answer_element.style.height = "200px";
+                answer_element.style.bottom = "84%";
                 answer_element.style.zIndex = "999";
-                answer_element.style.fontSize = "20px";
-                answer_element.style.border = "3px solid black";
-                answer_element.style.borderRadius = "10px";
-                answer_element.style.boxShadow = "5px 5px 5px rgba(2, 3, 5, 6.3)";
-                answer_element.textShadow = "3px 3px 5px rgba(1, 1, 1, 1.5)";
+                answer_element.style.fontSize = "18px";
+                answer_element.style.textShadow = "3px 3px 5px rgba(1, 1, 1, 1.5)";
                 document.body.insertBefore(answer_element, document.body.firstChild);
               setTimeout(function(){
                 answer_element.remove();
@@ -136,9 +131,9 @@ function OnClick() {
       button.innerHTML = "Hack Again";
       button.style.display = "none";
       czywyswietlany = false;
-      alert("odpowiedzi zostały pobrane możesz rozpocząć quiz, by ponownie wyświetlić przycisk do pobierania odpowiedzi kliknij h, pamiętaj przy rozpoczęciu następnego quizu musisz pobrać je ponownie");
+      alert("odpowiedzi zostały pobrane możesz rozpocząć quiz, by ponownie wyświetlić przycisk do pobierania odpowiedzi kliknij h(na telefonie po prostu odśwież strone), pamiętaj przy rozpoczęciu następnego quizu musisz pobrać je ponownie");
     }
-    alert("odpowiedzi zostały pobrane możesz rozpocząć quiz, by ponownie wyświetlić przycisk do pobierania odpowiedzi kliknij h, pamiętaj przy rozpoczęciu następnego quizu musisz pobrać je ponownie");
+    alert("odpowiedzi zostały pobrane możesz rozpocząć quiz, by ponownie wyświetlić przycisk do pobierania odpowiedzi kliknij h(na telefonie po prostu odśwież strone), pamiętaj przy rozpoczęciu następnego quizu musisz pobrać je ponownie");
   };
   button.addEventListener('mouseenter', function() {
     button.style.backgroundColor = 'green';
