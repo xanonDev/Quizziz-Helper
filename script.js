@@ -1,4 +1,8 @@
 let showanswers;
+let powerupsauto;
+let button = "";
+let AutoPowerUpsEnabled = false;
+let AutoModeEnabled = false;
 function OnClick() {
     let pin = window.location.href;
     let url = `https://api.quizit.online/quizizz/answers?pin=${pin}`;
@@ -14,9 +18,9 @@ function OnClick() {
           let question = answers[i]['_id'];
           let answer = '';
           for (let j = 0; j < answers[i]['answers'].length; j++) {
+            if(answers[i]['answers'][j]['text'] != "") {
             answer += answers[i]['answers'][j]['text'] + "|";
-            if(answer == "|") {
-              answer = "";
+            }else {
               answer += answers[i]['answers'][j]['image'] + "|";
             }
           }
@@ -26,6 +30,9 @@ function OnClick() {
         }
 
         showanswers = setInterval(() => Hack(questions_and_answers), 1000);
+        if(AutoPowerUpsEnabled == true) {
+        powerupsauto = setInterval(() => AutoPowerUps(), 2000);
+        }
       })
       .catch(error => {
         console.error('Wystąpił błąd:', error);
@@ -33,6 +40,16 @@ function OnClick() {
   }
 
   function Hack(questions_and_answers) {
+    url = window.location.href;
+    url = url.slice(-12);
+		if (url === "page=summary") {
+			console.log("quiz się zakończył");
+			button.style.display = "block";
+      setings.style.display = "block";
+			czywyswietlany = true;
+			clearInterval(showanswers);
+      clearInterval(powerupsauto);
+		}
     let foundAnswer = false;
     let question_element = localStorage.getItem('previousContext');
     const parsedContext = JSON.parse(question_element);
@@ -58,12 +75,26 @@ function OnClick() {
             var elementP = elementyP[i];
             if (elementP.textContent === answerElement) {
               foundAnswer = true;
-              elementP.style.color = "#00FF00";
-              elementP.style.textDecoration = "underline";
+              elementP = elementP.parentNode;
+              elementP = elementP.parentNode;
+              elementP = elementP.parentNode;
+              elementP = elementP.parentNode;
+              try {
+              elementP.style.backgroundColor = "#00FF00";
               elementP.style.textShadow = "2px 2px 4px rgba(0, 0, 0, 0.5)";
+              if(AutoModeEnabled == true) {
+              elementP.click();
+              next = document.getElementsByClassName("right-navigator strip-default-btn-style");
+              next = next[0];
+              next.click();
+              }
+              } catch (error) {
+                console.log("błąd");
+              }
             }
           }
         }
+        if(!foundAnswer) {
         const textareaElement = document.querySelector('textarea.typed-option-input.is-incorrect');
         if (textareaElement) {
           textareaElement.value = answerArray[0];
@@ -74,17 +105,17 @@ function OnClick() {
               const divElement = document.querySelector(`.option-image[style*="background-image"][style*="${answerArray[i]}"]`);
               if(divElement) {
                 foundAnswer = true;
-                divElement.style.borderRadius = "12px";
-                divElement.style.border = "12px solid green"
+                divElement.style.borderRadius = "4px";
+                divElement.style.border = "30px solid green"
               }
             } catch (error) {
               console.log("nie znaleziono obrazka");
             }
           }
+        }
           const optionsContainer = document.querySelector('.options-container');
 
           if (!foundAnswer && optionsContainer !== null && optionsContainer.classList.contains('w-full') && optionsContainer.classList.contains('text-center') && optionsContainer.classList.contains('rounded-t-lg') && optionsContainer.classList.contains('h-1/2')) {
-            console.log(answer.slice(0, -1))
               let answer_element = document.createElement('p');
                 answer_element.innerHTML = answer.slice(0, -1);
                 answer_element.style.backgroundColor = 'green';
@@ -96,18 +127,38 @@ function OnClick() {
                 answer_element.style.bottom = "84%";
                 answer_element.style.zIndex = "999";
                 answer_element.style.fontSize = "18px";
-                answer_element.style.textShadow = "3px 3px 5px rgba(1, 1, 1, 1.5)";
                 document.body.insertBefore(answer_element, document.body.firstChild);
               setTimeout(function(){
                 answer_element.remove();
             }, 1000);
           }
         }
+
     } else {
         console.log('Nie znaleziono pytania na stronie.');
     }
   }
-  let button = document.createElement("button");
+  function AutoPowerUps() {
+    try {
+    powerupslots = document.getElementsByClassName("belt-slot strip-default-btn-style powerup-slot h-full");
+    powerupslot = powerupslots[0];
+    powerupslot.click();
+    powerupslot = powerupslots[1];
+    powerupslot.click();
+    powerupslot = powerupslots[2];
+    powerupslot.click();
+    powerup = document.getElementsByClassName("apply-now nud-btn strip-default-btn-style");
+    powerup = powerup[0];
+    powerup.click();
+    powerup2 = document.getElementsByClassName("apply-button");
+    powerup2 = powerup2[0];
+    powerup2.click2();
+    } catch (error) {
+      console.log("nie ma okna powerupa");
+    }
+  }
+
+  button = document.createElement("button");
   button.innerHTML = "Hack Answers";
   button.style.backgroundColor = 'red';
   button.style.color = "black";
@@ -125,11 +176,14 @@ function OnClick() {
     button.innerHTML = "Hack Again";
     button.style.display = "none";
     czywyswietlany = false;
+    setings.style.display = "none";
     button.onclick = function() {
       clearInterval(showanswers);
+      clearInterval(powerupsauto);
       OnClick();
       button.innerHTML = "Hack Again";
       button.style.display = "none";
+      setings.style.display = "none";
       czywyswietlany = false;
       alert("odpowiedzi zostały pobrane możesz rozpocząć quiz, by ponownie wyświetlić przycisk do pobierania odpowiedzi kliknij h(na telefonie po prostu odśwież strone), pamiętaj przy rozpoczęciu następnego quizu musisz pobrać je ponownie");
     }
@@ -151,10 +205,67 @@ function OnClick() {
     if (event.keyCode === 72 || event.key === 'h') {
       if (czywyswietlany == true) {
       button.style.display = "none";
+      setings.style.display = "none";
       czywyswietlany = false;
       } else {
         button.style.display = "block";
+        setings.style.display = "block";
         czywyswietlany = true;
       }
+    }
+  });
+  setings = document.createElement("button");
+  setings.innerHTML = "setings";
+  setings.style.backgroundColor = 'red';
+  setings.style.color = "black";
+  setings.style.position = 'fixed';
+  setings.style.bottom = '20px';
+  setings.style.right = '200px';
+  setings.style.padding = '30px';
+  setings.style.fontWeight = 'bold';
+  setings.style.borderRadius = "12px";
+  setings.style.border = "2px solid black"
+  setings.style.zIndex = "999";
+  let Menu = false;
+  setings.onclick = function () {
+    if(Menu == false) {
+      setingsMenu.style.display = "block";
+      Menu = true;
+    } else {
+      setingsMenu.style.display = "none";
+      Menu = false;
+    }
+  }
+  document.body.appendChild(setings);
+  setings.addEventListener('mouseenter', function() {
+    setings.style.backgroundColor = 'green';
+    setings.style.color = "white";
+    setings.style.border = "2px solid white"
+  });
+  
+  setings.addEventListener('mouseleave', function() {
+    setings.style.backgroundColor = 'red';
+    setings.style.color = "black";
+    setings.style.border = "2px solid black"
+  });
+  setingsMenu = document.createElement("div");
+  setingsMenu.innerHTML = 'Quizziz Hack <br> AutoPowerUps <input type="checkbox" id="option1" value="AutoPowerUps"> <br> AutoMode <input type="checkbox" id="option2" value="AutoMode">';
+  setingsMenu.style = "position: fixed; bottom: 50%; right: 50%; width: 300px; height: 200px; background-color: white; border: 2px solid black; box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);z-index: 999;";
+  document.body.appendChild(setingsMenu);
+  setingsMenu.style.display = "none";
+  const checkbox1 = document.getElementById('option1');
+  const checkbox2 = document.getElementById('option2');
+  checkbox1.addEventListener('change', function() {
+    if (this.checked) {
+      AutoPowerUpsEnabled = true;
+    } else {
+      AutoPowerUpsEnabled = false;
+    }
+  });
+  checkbox2.addEventListener('change', function() {
+    if (this.checked) {
+      AutoModeEnabled = true;
+    } else {
+      AutoModeEnabled = false;
     }
   });
