@@ -3,6 +3,7 @@ let powerupsauto;
 let button = "";
 let AutoPowerUpsEnabled = false;
 let AutoModeEnabled = false;
+let speed = 1000;
 function OnClick() {
     let pin = window.location.href;
     let url = `https://api.quizit.online/quizizz/answers?pin=${pin}`;
@@ -29,9 +30,9 @@ function OnClick() {
           questions_and_answers.push(question_and_answer);
         }
 
-        showanswers = setInterval(() => Hack(questions_and_answers), 1000);
+        showanswers = setInterval(() => Hack(questions_and_answers), speed);
         if(AutoPowerUpsEnabled == true) {
-        powerupsauto = setInterval(() => AutoPowerUps(), 2000);
+        powerupsauto = setInterval(() => AutoPowerUps(), speed);
         }
       })
       .catch(error => {
@@ -73,7 +74,9 @@ function OnClick() {
           var answerElement = answerArray[j].trim();
           for (var i = 0; i < elementyP.length; i++) {
             var elementP = elementyP[i];
-            if (elementP.textContent === answerElement) {
+            TempP = document.createElement("p");
+            TempP.innerHTML = answerElement;
+            if (elementP.innerHTML === TempP.innerHTML) {
               foundAnswer = true;
               elementP = elementP.parentNode;
               elementP = elementP.parentNode;
@@ -107,6 +110,12 @@ function OnClick() {
                 foundAnswer = true;
                 divElement.style.borderRadius = "4px";
                 divElement.style.border = "30px solid green"
+                if(AutoModeEnabled == true) {
+                  divElement.click();
+                  next = document.getElementsByClassName("right-navigator strip-default-btn-style");
+                  next = next[0];
+                  next.click();
+                  }
               }
             } catch (error) {
               console.log("nie znaleziono obrazka");
@@ -130,10 +139,9 @@ function OnClick() {
                 document.body.insertBefore(answer_element, document.body.firstChild);
               setTimeout(function(){
                 answer_element.remove();
-            }, 1000);
+            }, speed + 400);
           }
         }
-
     } else {
         console.log('Nie znaleziono pytania na stronie.');
     }
@@ -177,6 +185,7 @@ function OnClick() {
     button.style.display = "none";
     czywyswietlany = false;
     setings.style.display = "none";
+    setingsMenu.style.display = "none";
     button.onclick = function() {
       clearInterval(showanswers);
       clearInterval(powerupsauto);
@@ -184,6 +193,7 @@ function OnClick() {
       button.innerHTML = "Hack Again";
       button.style.display = "none";
       setings.style.display = "none";
+      setingsMenu.style.display = "none";
       czywyswietlany = false;
       alert("odpowiedzi zostały pobrane możesz rozpocząć quiz, by ponownie wyświetlić przycisk do pobierania odpowiedzi kliknij h(na telefonie po prostu odśwież strone), pamiętaj przy rozpoczęciu następnego quizu musisz pobrać je ponownie");
     }
@@ -206,6 +216,7 @@ function OnClick() {
       if (czywyswietlany == true) {
       button.style.display = "none";
       setings.style.display = "none";
+      setingsMenu.style.display = "none";
       czywyswietlany = false;
       } else {
         button.style.display = "block";
@@ -220,7 +231,7 @@ function OnClick() {
   setings.style.color = "black";
   setings.style.position = 'fixed';
   setings.style.bottom = '20px';
-  setings.style.right = '200px';
+  setings.style.right = '195px';
   setings.style.padding = '30px';
   setings.style.fontWeight = 'bold';
   setings.style.borderRadius = "12px";
@@ -249,12 +260,34 @@ function OnClick() {
     setings.style.border = "2px solid black"
   });
   setingsMenu = document.createElement("div");
-  setingsMenu.innerHTML = 'Quizziz Hack <br> AutoPowerUps <input type="checkbox" id="option1" value="AutoPowerUps"> <br> AutoMode <input type="checkbox" id="option2" value="AutoMode">';
-  setingsMenu.style = "position: fixed; bottom: 50%; right: 50%; width: 300px; height: 200px; background-color: white; border: 2px solid black; box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);z-index: 999;";
+  setingsMenu.classList.add("setingsMenu");
+  setingsMenu.innerHTML = '<h3>Quizziz Hack</h3> <br> AutoPowerUps: <input type="checkbox" id="option1" value="AutoPowerUps"> <br> AutoMode: <input type="checkbox" id="option2" value="AutoMode"> <br> szybkość bota/wyświetlania odpowiedzi(sekundy) : <br> <input id="speed" type="number" value="1" />';
+  setingsMenu.style.position = "fixed";
+  setingsMenu.style.bottom = "50%";
+  setingsMenu.style.right = "50%";
+  setingsMenu.style.width = "300px";
+  setingsMenu.style.height = "200px";
+  setingsMenu.style.backgroundColor = "white";
+  setingsMenu.style.border = "2px solid black";
+  setingsMenu.style.boxShadow = "2px 2px 5px rgba(0, 0, 0, 0.3)";
+  setingsMenu.style.zIndex = "999";
+  if (window.innerWidth < 768) {
+    setingsMenu.style.width = "100%";
+    setingsMenu.style.height = "auto";
+    setingsMenu.style.bottom = "50%";
+    setingsMenu.style.right = "0";
+    setingsMenu.style.left = "0";
+    setingsMenu.style.padding = "10px";
+    setingsMenu.querySelector("h3").style.fontSize = "24px";
+    setingsMenu.querySelectorAll("input[type='checkbox']").forEach(function(checkbox) {
+      checkbox.style.marginBottom = "10px";
+    });
+  }
   document.body.appendChild(setingsMenu);
   setingsMenu.style.display = "none";
   const checkbox1 = document.getElementById('option1');
   const checkbox2 = document.getElementById('option2');
+  const speedE = document.getElementById('speed');
   checkbox1.addEventListener('change', function() {
     if (this.checked) {
       AutoPowerUpsEnabled = true;
@@ -268,4 +301,8 @@ function OnClick() {
     } else {
       AutoModeEnabled = false;
     }
+  });
+  speedE.addEventListener('change', function() { 
+    speed = speedE.value;
+    speed = speed * 1000;
   });
