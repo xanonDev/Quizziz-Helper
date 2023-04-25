@@ -11,7 +11,7 @@
 		}
 	],
 	"permissions": ["activeTab", "https://api.quizit.online/*"],
-	"browser_action": {
+	"action": {
 		"default_icon": "icon.png"
 	},
 	"icons": {
