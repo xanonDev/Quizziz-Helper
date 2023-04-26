@@ -4,6 +4,7 @@ let button = "";
 let AutoPowerUpsEnabled = false;
 let AutoModeEnabled = false;
 let speed = 1000;
+let czypodkreslac = true;
 function OnClick() {
     let pin = window.location.href;
     let url = `https://api.quizit.online/quizizz/answers?pin=${pin}`;
@@ -40,6 +41,15 @@ function OnClick() {
       });
   }
 
+  function isUrl(str) {
+    try {
+      new URL(str);
+      return true;
+    } catch (_) {
+      return false;
+    }
+  }
+
   function Hack(questions_and_answers) {
     url = window.location.href;
     url = url.slice(-12);
@@ -70,6 +80,7 @@ function OnClick() {
         answerArray = answerArray.map(item => item.replace("<p>", ''));
         answerArray = answerArray.map(item => item.replace("</p>", ''));
         answerArray.pop();
+        if(czypodkreslac == true) {
         for (var j = 0; j < answerArray.length; j++) {
           var answerElement = answerArray[j].trim();
           for (var i = 0; i < elementyP.length; i++) {
@@ -83,6 +94,7 @@ function OnClick() {
               elementP = elementP.parentNode;
               elementP = elementP.parentNode;
               try {
+              if(elementP) {
               elementP.style.backgroundColor = "#00FF00";
               elementP.style.textShadow = "2px 2px 4px rgba(0, 0, 0, 0.5)";
               if(AutoModeEnabled == true) {
@@ -91,21 +103,27 @@ function OnClick() {
               next = next[0];
               next.click();
               }
+            }
               } catch (error) {
                 console.log("błąd");
               }
             }
           }
         }
+      }
         if(!foundAnswer) {
         const textareaElement = document.querySelector('textarea.typed-option-input.is-incorrect');
         if (textareaElement) {
           textareaElement.value = answerArray[0];
           foundAnswer = true;
         } else {
+          HTTPiden = answer.slice(8)
           for(var i = 0; i < answerArray.length; i++) {
+            HTTPiden = isUrl(answerArray[i]);
             try {
+              if(HTTPiden == true) {
               const divElement = document.querySelector(`.option-image[style*="background-image"][style*="${answerArray[i]}"]`);
+            
               if(divElement) {
                 foundAnswer = true;
                 divElement.style.borderRadius = "4px";
@@ -117,6 +135,7 @@ function OnClick() {
                   next.click();
                   }
               }
+            }
             } catch (error) {
               console.log("nie znaleziono obrazka");
             }
@@ -137,9 +156,9 @@ function OnClick() {
                 answer_element.style.zIndex = "999";
                 answer_element.style.fontSize = "18px";
                 document.body.insertBefore(answer_element, document.body.firstChild);
-              setTimeout(function(){
-                answer_element.remove();
-            }, speed + 400);
+            document.addEventListener('click', () => {
+              answer_element.remove();
+            });
           }
         }
     } else {
@@ -171,7 +190,7 @@ function OnClick() {
   button.style.backgroundColor = 'red';
   button.style.color = "black";
   button.style.position = 'fixed';
-  button.style.bottom = '20px';
+  button.style.bottom = '50px';
   button.style.right = '20px';
   button.style.padding = '30px';
   button.style.fontWeight = 'bold';
@@ -230,7 +249,7 @@ function OnClick() {
   setings.style.backgroundColor = 'red';
   setings.style.color = "black";
   setings.style.position = 'fixed';
-  setings.style.bottom = '20px';
+  setings.style.bottom = '50px';
   setings.style.right = '195px';
   setings.style.padding = '30px';
   setings.style.fontWeight = 'bold';
@@ -261,7 +280,7 @@ function OnClick() {
   });
   setingsMenu = document.createElement("div");
   setingsMenu.classList.add("setingsMenu");
-  setingsMenu.innerHTML = '<h3>Quizziz Hack</h3> <br> AutoPowerUps: <input type="checkbox" id="option1" value="AutoPowerUps"> <br> AutoMode: <input type="checkbox" id="option2" value="AutoMode"> <br> szybkość bota/wyświetlania odpowiedzi(sekundy) : <br> <input id="speed" type="number" value="1" />';
+  setingsMenu.innerHTML = '<h3>Quizziz Helper</h3> <br> AutoPowerUps: <input type="checkbox" id="option1" value="AutoPowerUps"> <br> AutoMode: <input type="checkbox" id="option2" value="AutoMode"> <br> szybkość bota/wyświetlania odpowiedzi(sekundy) : <br> <input type="range" id="speed" name="slider" min="0.01" max="20" step="1" value="1"> <span id="speedSH">1 sekundy</span> <br> <label> typ wyświetlania odpowiedzi: <select id="wyswietlanie"> <option value="opcja1">podświetlanie</option> <option value="opcja2">pokazywanie</option> </select> </label> <span id="wersja">wersja 1.6.5</span>';
   setingsMenu.style.position = "fixed";
   setingsMenu.style.bottom = "50%";
   setingsMenu.style.right = "50%";
@@ -288,6 +307,8 @@ function OnClick() {
   const checkbox1 = document.getElementById('option1');
   const checkbox2 = document.getElementById('option2');
   const speedE = document.getElementById('speed');
+  const wybor = document.getElementById('wyswietlanie');
+  const wersja = document.getElementById('wersja');
   checkbox1.addEventListener('change', function() {
     if (this.checked) {
       AutoPowerUpsEnabled = true;
@@ -296,13 +317,32 @@ function OnClick() {
     }
   });
   checkbox2.addEventListener('change', function() {
-    if (this.checked) {
+    if (this.checked && czypodkreslac == true) {
       AutoModeEnabled = true;
     } else {
       AutoModeEnabled = false;
+      this.checked = false;
     }
   });
   speedE.addEventListener('change', function() { 
     speed = speedE.value;
+    speedSH = document.getElementById('speedSH');
+    speedSH.innerHTML = speed + " sekundy";
     speed = speed * 1000;
   });
+  wybor.addEventListener('change', function() { 
+    if(wybor.value == "opcja1") {
+      czypodkreslac = true;
+    }else {
+      if(wybor.value == "opcja2") {
+        czypodkreslac = false;
+        checkbox2.checked = false;
+      }
+    }
+  });
+  wersja.style.position = "absolute";
+  wersja.style.bottom = "2px";
+  wersja.style.right = "2px";
+  wersja.style.color = "red";
+  wersja.style.fontSize = "85%";
+  wersja.style.fontWeight = "bold";
