@@ -5,6 +5,7 @@ let AutoPowerUpsEnabled = false;
 let AutoModeEnabled = false;
 let speed = 1000;
 let czypodkreslac = true;
+let kolor = "#00FF00";
 function OnClick() {
     let pin = window.location.href;
     let url = `https://api.quizit.online/quizizz/answers?pin=${pin}`;
@@ -95,7 +96,7 @@ function OnClick() {
               elementP = elementP.parentNode;
               try {
               if(elementP) {
-              elementP.style.backgroundColor = "#00FF00";
+              elementP.style.backgroundColor = kolor;
               elementP.style.textShadow = "2px 2px 4px rgba(0, 0, 0, 0.5)";
               if(AutoModeEnabled == true) {
               elementP.click();
@@ -127,7 +128,7 @@ function OnClick() {
               if(divElement) {
                 foundAnswer = true;
                 divElement.style.borderRadius = "4px";
-                divElement.style.border = "30px solid green"
+                divElement.style.border = "30px solid " + kolor;
                 if(AutoModeEnabled == true) {
                   divElement.click();
                   next = document.getElementsByClassName("right-navigator strip-default-btn-style");
@@ -146,7 +147,7 @@ function OnClick() {
           if (!foundAnswer && optionsContainer !== null && optionsContainer.classList.contains('w-full') && optionsContainer.classList.contains('text-center') && optionsContainer.classList.contains('rounded-t-lg') && optionsContainer.classList.contains('h-1/2')) {
               let answer_element = document.createElement('p');
                 answer_element.innerHTML = answer.slice(0, -1);
-                answer_element.style.backgroundColor = 'green';
+                answer_element.style.backgroundColor = kolor;
                 answer_element.style.padding = '8px';
                 answer_element.style.color = 'white';
                 answer_element.style.fontWeight = 'bold';
@@ -156,9 +157,9 @@ function OnClick() {
                 answer_element.style.zIndex = "999";
                 answer_element.style.fontSize = "18px";
                 document.body.insertBefore(answer_element, document.body.firstChild);
-            document.addEventListener('click', () => {
-              answer_element.remove();
-            });
+                setTimeout(function(){
+                  answer_element.remove();
+              }, speed + 400);
           }
         }
     } else {
@@ -170,16 +171,25 @@ function OnClick() {
     powerupslots = document.getElementsByClassName("belt-slot strip-default-btn-style powerup-slot h-full");
     powerupslot = powerupslots[0];
     powerupslot.click();
+    powerup2 = document.getElementsByClassName("apply-button");
+    powerup2 = powerup2[0];
+    powerup2.click();
     powerupslot = powerupslots[1];
     powerupslot.click();
+    powerup2 = document.getElementsByClassName("apply-button");
+    powerup2 = powerup2[0];
+    powerup2.click2();
     powerupslot = powerupslots[2];
     powerupslot.click();
+    powerup2 = document.getElementsByClassName("apply-button");
+    powerup2 = powerup2[0];
+    powerup2.click2();
     powerup = document.getElementsByClassName("apply-now nud-btn strip-default-btn-style");
     powerup = powerup[0];
     powerup.click();
     powerup2 = document.getElementsByClassName("apply-button");
     powerup2 = powerup2[0];
-    powerup2.click2();
+    powerup2.click();
     } catch (error) {
       console.log("nie ma okna powerupa");
     }
@@ -280,11 +290,11 @@ function OnClick() {
   });
   setingsMenu = document.createElement("div");
   setingsMenu.classList.add("setingsMenu");
-  setingsMenu.innerHTML = '<h3>Quizziz Helper</h3> <br> AutoPowerUps: <input type="checkbox" id="option1" value="AutoPowerUps"> <br> AutoMode: <input type="checkbox" id="option2" value="AutoMode"> <br> szybkość bota/wyświetlania odpowiedzi(sekundy) : <br> <input type="range" id="speed" name="slider" min="0.01" max="20" step="1" value="1"> <span id="speedSH">1 sekundy</span> <br> <label> typ wyświetlania odpowiedzi: <select id="wyswietlanie"> <option value="opcja1">podświetlanie</option> <option value="opcja2">pokazywanie</option> </select> </label> <span id="wersja">wersja 1.6.5</span>';
+  setingsMenu.innerHTML = '<h3>Quizziz Helper</h3> <br> AutoPowerUps: <input type="checkbox" id="option1" value="AutoPowerUps"> <br> AutoMode: <input type="checkbox" id="option2" value="AutoMode"> <br> szybkość bota/wyświetlania odpowiedzi(sekundy) : <br> <input type="range" id="speed" name="slider" min="0.01" max="20" step="1" value="1"> <span id="speedSH">1 sekundy</span> <br> <label> typ wyświetlania odpowiedzi: <select id="wyswietlanie"> <option value="opcja1">podświetlanie</option> <option value="opcja2">pokazywanie</option> </select> </label> <span id="wersja">wersja 1.6.5</span> <br> kolor odpowiedzi: <input type="color" id="color" name="color" value="#00FF00">';
   setingsMenu.style.position = "fixed";
   setingsMenu.style.bottom = "50%";
   setingsMenu.style.right = "50%";
-  setingsMenu.style.width = "300px";
+  setingsMenu.style.width = "400px";
   setingsMenu.style.height = "200px";
   setingsMenu.style.backgroundColor = "white";
   setingsMenu.style.border = "2px solid black";
@@ -309,6 +319,7 @@ function OnClick() {
   const speedE = document.getElementById('speed');
   const wybor = document.getElementById('wyswietlanie');
   const wersja = document.getElementById('wersja');
+  const color = document.getElementById('color');
   checkbox1.addEventListener('change', function() {
     if (this.checked) {
       AutoPowerUpsEnabled = true;
@@ -339,6 +350,10 @@ function OnClick() {
         checkbox2.checked = false;
       }
     }
+  });
+  color.addEventListener('change', function() { 
+    kolor = color.value;
+    console.log(kolor);
   });
   wersja.style.position = "absolute";
   wersja.style.bottom = "2px";
