@@ -113,11 +113,13 @@ function OnClick() {
         }
       }
         if(!foundAnswer) {
-        const textareaElement = document.querySelector('textarea.typed-option-input.is-incorrect');
-        if (textareaElement) {
-          textareaElement.value = answerArray[0];
-          foundAnswer = true;
-        } else {
+          const textareaElement = document.querySelector('textarea.typed-option-input.is-incorrect');
+          if (textareaElement) {
+            const inputEvent = new Event('input', { bubbles: true });
+            textareaElement.value = answerArray[0];
+            textareaElement.dispatchEvent(inputEvent);
+            foundAnswer = true;
+          } else {
           HTTPiden = answer.slice(8)
           for(var i = 0; i < answerArray.length; i++) {
             HTTPiden = isUrl(answerArray[i]);
@@ -162,34 +164,46 @@ function OnClick() {
               }, speed + 400);
           }
         }
+        if(AutoModeEnabled == true) {
+        submit = document.getElementsByClassName("submit-button exp-subtext");
+        submit = submit[0];
+        setTimeout(function(){
+                  try {
+                  submit.click();
+                  }catch (error) {
+                    console.log("nie ma submita");
+                  }
+        }, 500);
+      }
+      if(AutoModeEnabled == true) {
+        submit = document.getElementsByClassName("submit-button");
+        submit = submit[0];
+        setTimeout(function(){
+          try {
+            submit.click();
+            }catch (error) {
+              console.log("nie ma submita");
+            }
+        }, 500);
+      }
+
     } else {
         console.log('Nie znaleziono pytania na stronie.');
     }
   }
   function AutoPowerUps() {
     try {
-    powerupslots = document.getElementsByClassName("belt-slot strip-default-btn-style powerup-slot h-full");
-    powerupslot = powerupslots[0];
-    powerupslot.click();
-    powerup2 = document.getElementsByClassName("apply-button");
-    powerup2 = powerup2[0];
-    powerup2.click();
-    powerupslot = powerupslots[1];
-    powerupslot.click();
-    powerup2 = document.getElementsByClassName("apply-button");
-    powerup2 = powerup2[0];
-    powerup2.click2();
-    powerupslot = powerupslots[2];
-    powerupslot.click();
-    powerup2 = document.getElementsByClassName("apply-button");
-    powerup2 = powerup2[0];
-    powerup2.click2();
-    powerup = document.getElementsByClassName("apply-now nud-btn strip-default-btn-style");
-    powerup = powerup[0];
-    powerup.click();
-    powerup2 = document.getElementsByClassName("apply-button");
-    powerup2 = powerup2[0];
-    powerup2.click();
+     powerupsslots = document.getElementsByClassName("belt-slot strip-default-btn-style full-size powerup-slot h-full");
+     for (var p = 0; p < powerupsslots.length; p++) {
+      powerupsslot = powerupsslots[p];
+      powerupsslot.click();
+     }
+     powerupsapply = document.getElementsByClassName("apply-now nud-btn strip-default-btn-style");
+     for (var p = 0; p < powerupsapply.length; p++) {
+      powerupsapply = powerupsapply[p];
+      powerupsapply.click();
+     }
+     
     } catch (error) {
       console.log("nie ma okna powerupa");
     }
@@ -255,7 +269,7 @@ function OnClick() {
     }
   });
   setings = document.createElement("button");
-  setings.innerHTML = "setings";
+  setings.innerHTML = "settings";
   setings.style.backgroundColor = 'red';
   setings.style.color = "black";
   setings.style.position = 'fixed';
@@ -290,7 +304,7 @@ function OnClick() {
   });
   setingsMenu = document.createElement("div");
   setingsMenu.classList.add("setingsMenu");
-  setingsMenu.innerHTML = '<h3>Quizziz Helper</h3> <br> AutoPowerUps: <input type="checkbox" id="option1" value="AutoPowerUps"> <br> AutoMode: <input type="checkbox" id="option2" value="AutoMode"> <br> szybkość bota/wyświetlania odpowiedzi(sekundy) : <br> <input type="range" id="speed" name="slider" min="0.01" max="20" step="1" value="1"> <span id="speedSH">1 sekundy</span> <br> <label> typ wyświetlania odpowiedzi: <select id="wyswietlanie"> <option value="opcja1">podświetlanie</option> <option value="opcja2">pokazywanie</option> </select> </label> <span id="wersja">wersja 1.6.5</span> <br> kolor odpowiedzi: <input type="color" id="color" name="color" value="#00FF00">';
+  setingsMenu.innerHTML = '<h3>Quizziz Helper</h3> <br> AutoPowerUps: <input type="checkbox" id="option1" value="AutoPowerUps"> <br> AutoMode: <input type="checkbox" id="option2" value="AutoMode"> <br> szybkość bota/wyświetlania odpowiedzi(sekundy) : <br> <input type="range" id="speed" name="slider" min="1" max="20" step="1" value="1"> <span id="speedSH">1 sekundy</span> <br> <label> typ wyświetlania odpowiedzi: <select id="wyswietlanie"> <option value="opcja1">podświetlanie</option> <option value="opcja2">pokazywanie</option> </select> </label> <span id="wersja">by xanonDev wersja 1.6.6</span> <br> kolor odpowiedzi: <input type="color" id="color" name="color" value="#00FF00"> <br> <button id="reset">resetuj ustawienia</button>';
   setingsMenu.style.position = "fixed";
   setingsMenu.style.bottom = "50%";
   setingsMenu.style.right = "50%";
@@ -320,6 +334,7 @@ function OnClick() {
   const wybor = document.getElementById('wyswietlanie');
   const wersja = document.getElementById('wersja');
   const color = document.getElementById('color');
+  const reset = document.getElementById('reset');
   checkbox1.addEventListener('change', function() {
     if (this.checked) {
       AutoPowerUpsEnabled = true;
@@ -361,3 +376,18 @@ function OnClick() {
   wersja.style.color = "red";
   wersja.style.fontSize = "85%";
   wersja.style.fontWeight = "bold";
+  reset.style.border = "1px solid black";
+  reset.onclick = function () {
+    AutoPowerUpsEnabled = false;
+    AutoModeEnabled = false;
+    speed = 1000;
+    czypodkreslac = true;
+    kolor = "#00FF00";
+    wybor.value == "opcja1";
+    speedE.value = "1";
+    checkbox1.checked = false;
+    checkbox2.checked = false;
+    color.value = kolor;
+    speedSH.innerHTML = "1 sekundy";
+
+  }
