@@ -211,15 +211,17 @@ function OnClick() {
 
   button = document.createElement("button");
   button.innerHTML = "Hack Answers";
-  button.style.backgroundColor = 'red';
-  button.style.color = "black";
+  button.style.backgroundColor = '#8B008B';
+  button.style.color = "white";
   button.style.position = 'fixed';
   button.style.bottom = '50px';
   button.style.right = '20px';
   button.style.padding = '30px';
   button.style.fontWeight = 'bold';
+  button.style.boxShadow = "2px 2px 2px rgb(25,25,112)";
   button.style.borderRadius = "12px";
   button.style.border = "2px solid black"
+  button.style.textShadow = "7px 4px 5px rgb(0,0,0)";
   button.style.zIndex = "999";
   let czywyswietlany = true;
   button.onclick = function() {
@@ -238,19 +240,44 @@ function OnClick() {
       setings.style.display = "none";
       setingsMenu.style.display = "none";
       czywyswietlany = false;
-      alert("odpowiedzi zostały pobrane możesz rozpocząć quiz, by ponownie wyświetlić przycisk do pobierania odpowiedzi kliknij h(na telefonie po prostu odśwież strone), pamiętaj przy rozpoczęciu następnego quizu musisz pobrać je ponownie");
+      Menu = false;
+      let noti = document.createElement('p');
+      noti.innerHTML = "odpowiedzi zostały pobrane możesz rozpocząć quiz, by ponownie wyświetlić przycisk do pobierania odpowiedzi kliknij h(na telefonie po prostu odśwież strone), pamiętaj przy rozpoczęciu następnego quizu musisz pobrać je ponownie, to powiadomienie zniknie po 6 sekundach";
+      noti.style.backgroundColor = kolor;
+      noti.style.padding = '8px';
+      noti.style.color = 'white';
+      noti.style.fontWeight = 'bold';
+      noti.style.width = "100%";
+      noti.style.position = "fixed";
+      noti.style.bottom = "84%";
+      noti.style.zIndex = "999";
+      noti.style.fontSize = "18px";
+      document.body.insertBefore(noti, document.body.firstChild);
+      setTimeout(function(){
+        noti.remove();
+      }, 6000);
     }
-    alert("odpowiedzi zostały pobrane możesz rozpocząć quiz, by ponownie wyświetlić przycisk do pobierania odpowiedzi kliknij h(na telefonie po prostu odśwież strone), pamiętaj przy rozpoczęciu następnego quizu musisz pobrać je ponownie");
+    let noti = document.createElement('p');
+      noti.innerHTML = "odpowiedzi zostały pobrane możesz rozpocząć quiz, by ponownie wyświetlić przycisk do pobierania odpowiedzi kliknij h(na telefonie po prostu odśwież strone), pamiętaj przy rozpoczęciu następnego quizu musisz pobrać je ponownie, to powiadomienie zniknie po 6 sekundach";
+      noti.style.backgroundColor = kolor;
+      noti.style.padding = '8px';
+      noti.style.color = 'white';
+      noti.style.fontWeight = 'bold';
+      noti.style.width = "100%";
+      noti.style.position = "fixed";
+      noti.style.bottom = "84%";
+      noti.style.zIndex = "999";
+      noti.style.fontSize = "18px";
+      document.body.insertBefore(noti, document.body.firstChild);
+      setTimeout(function(){
+        noti.remove();
+      }, 6000);
   };
   button.addEventListener('mouseenter', function() {
-    button.style.backgroundColor = 'green';
-    button.style.color = "white";
     button.style.border = "2px solid white"
   });
   
   button.addEventListener('mouseleave', function() {
-    button.style.backgroundColor = 'red';
-    button.style.color = "black";
     button.style.border = "2px solid black"
   });
   document.body.appendChild(button);
@@ -270,14 +297,16 @@ function OnClick() {
   });
   setings = document.createElement("button");
   setings.innerHTML = "settings";
-  setings.style.backgroundColor = 'red';
-  setings.style.color = "black";
+  setings.style.backgroundColor = '#8B008B';
+  setings.style.color = "white";
   setings.style.position = 'fixed';
   setings.style.bottom = '50px';
   setings.style.right = '195px';
+  setings.style.boxShadow = "2px 2px 2px rgb(25,25,112)";
   setings.style.padding = '30px';
   setings.style.fontWeight = 'bold';
   setings.style.borderRadius = "12px";
+  setings.style.textShadow = "7px 4px 5px rgb(0,0,0)";
   setings.style.border = "2px solid black"
   setings.style.zIndex = "999";
   let Menu = false;
@@ -292,31 +321,31 @@ function OnClick() {
   }
   document.body.appendChild(setings);
   setings.addEventListener('mouseenter', function() {
-    setings.style.backgroundColor = 'green';
-    setings.style.color = "white";
     setings.style.border = "2px solid white"
   });
   
   setings.addEventListener('mouseleave', function() {
-    setings.style.backgroundColor = 'red';
-    setings.style.color = "black";
     setings.style.border = "2px solid black"
   });
   setingsMenu = document.createElement("div");
   setingsMenu.classList.add("setingsMenu");
-  setingsMenu.innerHTML = '<h3>Quizziz Helper</h3> <br> AutoPowerUps: <input type="checkbox" id="option1" value="AutoPowerUps"> <br> AutoMode: <input type="checkbox" id="option2" value="AutoMode"> <br> szybkość bota/wyświetlania odpowiedzi(sekundy) : <br> <input type="range" id="speed" name="slider" min="1" max="20" step="1" value="1"> <span id="speedSH">1 sekundy</span> <br> <label> typ wyświetlania odpowiedzi: <select id="wyswietlanie"> <option value="opcja1">podświetlanie</option> <option value="opcja2">pokazywanie</option> </select> </label> <span id="wersja">by xanonDev wersja 1.6.6</span> <br> kolor odpowiedzi: <input type="color" id="color" name="color" value="#00FF00"> <br> <button id="reset">resetuj ustawienia</button>';
+  setingsMenu.innerHTML = '<h3 id="titleP">Quizziz Helper</h3> <button id="closeBTN">X</button> <br> AutoPowerUps: <input type="checkbox" id="option1" value="AutoPowerUps"> <br> AutoMode: <input type="checkbox" id="option2" value="AutoMode"> <br> szybkość bota/wyświetlania odpowiedzi(sekundy) : <br> <input type="range" id="speed" name="slider" min="1" max="20" step="1" value="1"> <span id="speedSH">1 sekundy</span> <br> <label> typ wyświetlania odpowiedzi: <select id="wyswietlanie"> <option value="opcja1">podświetlanie</option> <option value="opcja2">pokazywanie</option> </select> </label> <span id="wersja">by xanonDev wersja 1.7</span> <br> kolor odpowiedzi: <input type="color" id="color" name="color" value="#00FF00"> <br> <button id="reset">resetuj ustawień</button>';
   setingsMenu.style.position = "fixed";
   setingsMenu.style.bottom = "50%";
   setingsMenu.style.right = "50%";
-  setingsMenu.style.width = "400px";
-  setingsMenu.style.height = "200px";
-  setingsMenu.style.backgroundColor = "white";
-  setingsMenu.style.border = "2px solid black";
-  setingsMenu.style.boxShadow = "2px 2px 5px rgba(0, 0, 0, 0.3)";
+  setingsMenu.style.width = "470px";
+  setingsMenu.style.height = "250px";
+  setingsMenu.style.backgroundColor = "#8B008B";
+  setingsMenu.style.border = "4px solid black";
+  setingsMenu.style.boxShadow = "10px 6px 7px rgb(25,25,112)";
   setingsMenu.style.zIndex = "999";
+  setingsMenu.style.color = "#FFFF";
+  setingsMenu.style.fontWeight = 'bold';
+  setingsMenu.style.textShadow = "7px 4px 5px rgb(0,0,0)";
+  setingsMenu.style.opacity = "0.8";
   if (window.innerWidth < 768) {
     setingsMenu.style.width = "100%";
-    setingsMenu.style.height = "auto";
+    setingsMenu.style.height = "45%";
     setingsMenu.style.bottom = "50%";
     setingsMenu.style.right = "0";
     setingsMenu.style.left = "0";
@@ -335,6 +364,7 @@ function OnClick() {
   const wersja = document.getElementById('wersja');
   const color = document.getElementById('color');
   const reset = document.getElementById('reset');
+  const closeBTN = document.getElementById('closeBTN');
   checkbox1.addEventListener('change', function() {
     if (this.checked) {
       AutoPowerUpsEnabled = true;
@@ -376,7 +406,25 @@ function OnClick() {
   wersja.style.color = "red";
   wersja.style.fontSize = "85%";
   wersja.style.fontWeight = "bold";
-  reset.style.border = "1px solid black";
+  reset.style.border = "3px solid black";
+  reset.style.borderRadius = "10px";
+  reset.style.position = "absolute";
+  reset.style.bottom = "8px";
+  reset.style.right = "77%";
+  checkbox1.style.scale = "1.5";
+  checkbox2.style.scale = "1.5";
+  color.style.backgroundColor = "#8B008B";
+  wybor.style.backgroundColor = "#FF0066";
+  reset.style.backgroundColor = "#CC0033";
+  reset.style.boxShadow = "2px 2px 2px rgb(0,0,0)";
+  closeBTN.style.border = "1px solid black";
+  closeBTN.style.borderRadius = "3px";
+  closeBTN.style.position = "absolute";
+  closeBTN.style.backgroundColor = "#996699";
+  closeBTN.style.bottom = "89%";
+  closeBTN.style.right = "1%";
+  closeBTN.style.scale = "1.2";
+  closeBTN.style.width = "5%";
   reset.onclick = function () {
     AutoPowerUpsEnabled = false;
     AutoModeEnabled = false;
@@ -391,3 +439,8 @@ function OnClick() {
     speedSH.innerHTML = "1 sekundy";
 
   }
+  closeBTN.onclick = function () {
+    setingsMenu.style.display = "none";
+    Menu = false;
+  }
+  
