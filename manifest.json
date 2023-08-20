@@ -2,7 +2,7 @@
 	"manifest_version": 3,
 	"name": "Quizizz Helper",
 	"version": "1.7",
-	"description": "wykrada odpowiedzi do quizów na quizziz, autor x__anon",
+	"description": "Extracts answers for Quizizz quizzes, author x__anon",
 	"content_scripts": [
 		{
 			"matches": ["https://*.quizizz.com/*"],
