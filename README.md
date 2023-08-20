@@ -1,52 +1,51 @@
 # Quizizz Helper
 
-Quizizz Helper to rozszerzenie do przeglądarki, które umożliwia automatyczne udzielanie odpowiedzi w czasie rzeczywistym na pytania w Quizizz oraz korzystanie z power-upów, co pozwala 
-na uzyskiwanie 100% wyników oraz pozwala na jeszcze szybsze zdobywanie punktów. W tym readme przedstawimy kroki instalacji, jak korzystać z rozszerzenia oraz jego funkcje.
+Quizizz Helper is a browser extension that enables real-time automatic answering of questions on Quizizz, as well as utilizing power-ups to achieve a 100% score and earn points more quickly. In this readme, we'll present installation steps, how to use the extension, and its features.
 
-## Instalacja
+## Installation
 
-Quizizz Helper działa na przeglądarkach Google Chrome, Edge, opera, opera gx, kiwii (na innych nie testowane). Aby zainstalować rozszerzenie, należy:
+Quizizz Helper works on Google Chrome, Edge, Opera, Opera GX, Kiwi (not tested on others). To install the extension, follow these steps:
 
-1. Pobierz najnowszą wersje Quizizz Helper z GitHub lub <a href="https://discord.gg/BUGX9ry35q">discorda</a>.
-2. Otwórz przeglądarkę i przejdź do ustawień rozszerzeń.
-3. Włącz tryb programisty.
-4. Wybierz opcję "załaduj rozpakowane".
-5. Wybierz folder z kodem źródłowym Quizizz Helper.
-tutorial wideo wkrótce!!
+1. Download the latest version of Quizizz Helper from GitHub or [Discord](https://discord.gg/BUGX9ry35q).
+2. Open your browser and go to the extension settings.
+3. Enable developer mode.
+4. Choose the "load unpacked" option.
+5. Select the folder with the Quizizz Helper source code.
+   Video tutorial coming soon!!
 
-## Jak korzystać z rozszerzenia
+## How to Use the Extension
 
-otwórz quiz w Quizizz, Po tym, jak quiz się załaduje, kliknij przycisk "Hack Answers" w prawym dolnym rogu przeglądarki, aby automatycznie udzielać odpowiedzi na pytania w czasie rzeczywistym.
+1. Open a Quizizz quiz.
+2. Once the quiz loads, click the "Hack Answers" button in the bottom right corner of the browser to automatically provide answers to questions in real-time.
+3. If you want to disable automatic answering or the use of power-ups, or change the answer display type, click on the "settings" button.
 
-Jeśli chcesz wyłączyć automatyczne udzielanie odpowiedzi lub korzystanie z power-upów lub zmienić typ wyświetlania odpowiedzi
-kliknij na przycisk "settings".
+## Extension Features
 
-## Funkcje rozszerzenia
+### Automatic Answering
 
-### Automatyczne udzielanie odpowiedzi
+- When "Auto Mode" is enabled, Quizizz Helper will automatically provide answers to questions in real-time.
 
-Po włączeniu opcji "Auto Mode", Quizizz Helper będzie automatycznie udzielał odpowiedzi na pytania w czasie rzeczywistym.
+### Automatic Power-up Usage
 
-### Automatyczne korzystanie z power-upów
+- When "Auto Powerups" is enabled, Quizizz Helper will automatically use power-ups during the game.
 
-Po włączeniu opcji "Auto Powerups", Quizizz Helper będzie automatycznie korzystał z power-upów podczas gry.
+### Settings
 
-### Ustawienia
+The "settings" button allows customization of certain Quizizz Helper functions to individual needs, as well as enabling the above features.
 
-Przycisk "settings" pozwala na dostosowanie niektórych funkcji Quizizz Helper do indywidualnych potrzeb, oraz włączenie powyższych funkcji.
+- "speed": determines the speed at which Quizizz Helper automatically answers questions. Default value is 1 second.
+- "answer display mode": highlighting or displaying at the top of the page.
+- "color": allows changing the color of the answer highlighting.
+- "reset settings": resets settings to default.
 
-* "szybkość": określa prędkość, z jaką Quizizz Helper ma automatycznie udzielać odpowiedzi. Domyślna wartość to 1 sekunda.
-* "sposób pokazywania odpowiedzi": podświetlanie lub pokazywanie na górze strony
-* "kolor": pozwala na zmianę koloru podkreślenia odpowiedzi.
-* "resetuj ustawienia": resetuje ustawienia do ustawień fabrycznych
+### Disabling Quizizz Helper
 
-### Wyłączanie Quizziz Helpera
+- To disable Quizizz Helper, refresh the browser page. If using the extension in Google Chrome, you can also click the extension icon in the toolbar and select "Disable Quizizz Helper." In Firefox, you can right-click on the extension icon and choose "Disable Quizizz Helper."
 
-Aby wyłączyć Quizziz Helpera, należy odświeżyć stronę przeglądarki. W przypadku używania rozszerzenia w przeglądarce Google Chrome, można również kliknąć ikonę rozszerzenia na pasku narzędzi i wybrać opcję "Wyłącz Quizziz Helper". W przeglądarce Firefox, można kliknąć prawym przyciskiem myszy na ikonę rozszerzenia i wybrać opcję "Wyłącz Quizziz Helper".
+### Showing Buttons
 
-### Pokazazanie przycisków
-jak są schowane podczas quizu a chcesz zmienić ustawienia kliknij h
+- If buttons are hidden during the quiz and you want to change settings, press "h."
 
-### Podsumowanie
+### Summary
 
-Quizziz Helper to rozszerzenie do przeglądarki umożliwiające uzyskanie odpowiedzi na pytania w grze Quizizz. Rozszerzenie działa poprzez pobieranie odpowiedzi z serwera Quizit.online i podświetlanie odpowiedzi na ekranie gracza podczas gry.
+Quizizz Helper is a browser extension that enables getting answers to questions in Quizizz games. The extension works by fetching answers from the Quizit.online server and highlighting the answers on the player's screen during the game.
